@@ -69,27 +69,61 @@ int insert_first(Dlist **head,Dlist **tail, int data)
     return SUCCESS;
 }
 
-
-void add_operation(Dlist *tail1, Dlist *tail2, Dlist **head3, Dlist **tail3)
+void get_list_length(Dlist *head1, Dlist *tail1,Dlist *head2, Dlist *tail2,int *list1_len,int *list2_len)
 {
-    int carry=0,sum=0;
-    while(tail1!=NULL || tail2!=NULL || carry!=0)
+    while(head1!=NULL)
     {
-        sum=carry;
-        if(tail1!=NULL)
-        {
-            sum=sum+tail1->data;
-            tail1=tail1->prev;
-        }
-
-        if(tail2!=NULL)
-        {
-            sum=sum+tail2->data;
-            tail2=tail2->prev;
-        }
-
-        carry=sum/10;
-        insert_first(head3,tail3,sum%10);
+        head1=head1->next;
+        (*list1_len)++;
     }
+    while(head2!=NULL)
+    {
+        head2=head2->next;
+        (*list2_len)++;
+    }
+}
 
+int compare_lists(Dlist *head1, Dlist *tail1,Dlist *head2, Dlist *tail2)
+{
+    int list1_len=0,list2_len=0;
+    get_list_length(head1,tail1,head2,tail2,&list1_len,&list2_len);
+    if(list1_len>list2_len)
+        return NORMAL;
+    else if(list1_len<list2_len)
+        return SWAP;
+    else if(list1_len==list2_len)
+    {
+        while(head1->data==head2->data && head1!=NULL && head2!=NULL)
+        {
+            head1=head1->next;
+            head2=head2->next;
+        }
+        if(head1==NULL && head2==NULL)
+            return NORMAL;
+        if(head1->data>head2->data)
+            return NORMAL;
+        else if(head1->data<head2->data)
+            return SWAP;
+    }
+}
+
+void print_result(Dlist *head1,Dlist *tail1,Dlist *head2,Dlist *tail2, Dlist *headR, Dlist *tailR,char opr)
+{
+    print_list(head1, tail1);
+    printf(" %c ",opr);
+    print_list(head2, tail2);
+    printf(" = ");
+    print_list(headR, tailR);
+    printf("\n");
+}
+
+void leading_zero(Dlist **head,Dlist **tail)
+{
+    while(head!=NULL && (*head)->data==0)
+    {
+        Dlist *temp = *head;
+        *head = (*head)->next;
+        (*head)->prev = NULL;
+        free(temp);
+    }
 }

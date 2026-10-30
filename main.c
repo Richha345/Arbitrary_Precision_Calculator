@@ -2,15 +2,17 @@
 
 void print_list(Dlist *head,Dlist *tail)
 {
-    printf("head -> ");
+    if(head->data == '-')
+    {
+        printf("%c",'-');
+        head=head->next;
+    }
+    leading_zero(&head,&tail);
     while(head!=NULL)
     {
-        printf(" %d <-",head->data);
+        printf("%d",head->data);
         head=head->next;
-        if(head!=NULL)
-            printf("> ");
     }
-    printf(" tail\n");
 }
 int main(int argc, char *argv[])
 {
@@ -23,23 +25,30 @@ int main(int argc, char *argv[])
     Dlist *tail1=NULL;
     Dlist *head2=NULL;
     Dlist *tail2=NULL;
-    Dlist *head3=NULL;
-    Dlist *tail3=NULL;
-    
+    Dlist *headR=NULL;
+    Dlist *tailR=NULL;
+    int ret;
     create_node(&head1, &tail1, argv[1]);
-    print_list(head1, tail1);
+    
 
     create_node(&head2, &tail2, argv[3]);
-    print_list(head2, tail2);
 
     switch(argv[2][0])
     {
         case '+' :
-        add_operation(tail1, tail2, &head3, &tail3);
+        add_operation(tail1, tail2, &headR, &tailR);
+        print_result(head1,tail1,head2,tail2,headR,tailR,argv[2][0]);
         break;
 
         case '-' :
-        
+        if((ret = compare_lists(head1,tail1,head2,tail2))==NORMAL)  
+            sub_operation(tail1, tail2, &headR, &tailR);
+        else if(ret == SWAP)
+        {
+            sub_operation(tail2, tail1, &headR, &tailR);
+            insert_first(&headR,&tailR,'-');
+        }
+        print_result(head1,tail1,head2,tail2,headR,tailR,argv[2][0]);
         break;
 
         case '*' :
@@ -53,6 +62,5 @@ int main(int argc, char *argv[])
         default:
         printf("Invalid Operator\n");
     }
-    print_list(head3, tail3);
     return 0;
 }
