@@ -36,27 +36,29 @@ int main(int argc, char *argv[])
     switch(argv[2][0])
     {
         case '+' :
-        add_operation(tail1, tail2, &headR, &tailR);
-        print_result(head1,tail1,head2,tail2,headR,tailR,argv[2][0]);
+            add_operation(tail1, tail2, &headR, &tailR);
+            print_result(head1,tail1,head2,tail2,headR,tailR,argv[2][0]);
         break;
 
         case '-' :
-        if((ret = compare_lists(head1,tail1,head2,tail2))==NORMAL)  
-            sub_operation(tail1, tail2, &headR, &tailR);
-        else if(ret == SWAP)
-        {
-            sub_operation(tail2, tail1, &headR, &tailR);
-            insert_first(&headR,&tailR,'-');
-        }
-        print_result(head1,tail1,head2,tail2,headR,tailR,argv[2][0]);
+            if((ret = compare_lists(head1,tail1,head2,tail2))==NORMAL)  
+                sub_operation(tail1, tail2, &headR, &tailR);
+            else if(ret == SWAP)
+            {
+                sub_operation(tail2, tail1, &headR, &tailR);
+                insert_first(&headR,&tailR,'-');
+            }
+            print_result(head1,tail1,head2,tail2,headR,tailR,argv[2][0]);
         break;
 
-        case '*' :
-        
+        case 'x' :
+        case 'X' :
+            mul_operation(head1,tail1,head2,tail2,&headR,&tailR);
         break;
 
         case '/' :
-        
+            div_operation(head1,tail1,head2,tail2,&headR,&tailR);
+            print_result(head1,tail1,head2,tail2,headR,tailR,argv[2][0]);
         break;
 
         default:

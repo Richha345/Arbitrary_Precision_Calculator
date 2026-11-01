@@ -97,9 +97,11 @@ int compare_lists(Dlist *head1, Dlist *tail1,Dlist *head2, Dlist *tail2)
         {
             head1=head1->next;
             head2=head2->next;
+
+            if(head1==NULL && head2==NULL)
+                return NORMAL;
         }
-        if(head1==NULL && head2==NULL)
-            return NORMAL;
+        
         if(head1->data>head2->data)
             return NORMAL;
         else if(head1->data<head2->data)
@@ -119,11 +121,28 @@ void print_result(Dlist *head1,Dlist *tail1,Dlist *head2,Dlist *tail2, Dlist *he
 
 void leading_zero(Dlist **head,Dlist **tail)
 {
-    while(head!=NULL && (*head)->data==0)
+    while(*head!=NULL && (*head)->next!=NULL && (*head)->data==0)
     {
         Dlist *temp = *head;
         *head = (*head)->next;
         (*head)->prev = NULL;
         free(temp);
     }
+}
+
+int delete_list(Dlist **head,Dlist **tail)
+{
+    if(*head == NULL)
+        return FAILURE;
+
+    while(*head!=NULL)
+    {
+        Dlist *temp = *head;
+        (*head)->prev = NULL;
+        *head = (*head)->next;
+        free(temp); 
+    }
+    *head = NULL;
+    *tail = NULL;
+    return SUCCESS;
 }
