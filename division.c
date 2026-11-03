@@ -1,12 +1,17 @@
 #include "dll.h"
 
-void div_operation(Dlist *head1,Dlist *tail1,Dlist *head2, Dlist *tail2,Dlist **headR, Dlist **tailR)
+int div_operation(Dlist *head1,Dlist *tail1,Dlist *head2, Dlist *tail2,Dlist **headR, Dlist **tailR)
 {
     Dlist *head3 = NULL;
     Dlist *tail3 = NULL;
     Dlist *res_head = NULL;
     Dlist *res_tail = NULL;
     Dlist *temp1 = head1;
+    if(head2->data==0 && head2->next==NULL)
+        {
+            printf("ERROR: Division by ZERO not possible\n");
+            return FAILURE;
+        }
 
     while(temp1!=NULL)
     {
@@ -28,5 +33,6 @@ void div_operation(Dlist *head1,Dlist *tail1,Dlist *head2, Dlist *tail2,Dlist **
             leading_zero(&head3,&tail3);
         }
         insert_last(headR,tailR,count);
+        return SUCCESS;
     }
 }

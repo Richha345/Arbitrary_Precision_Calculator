@@ -31,6 +31,7 @@ void add_operation(Dlist *tail1, Dlist *tail2, Dlist **headR, Dlist **tailR)
             insert_first(headR,tailR,data%10);
         }
     }
+     leading_zero(headR,tailR);
     if(carry==1)
         insert_first(headR,tailR,carry);
 

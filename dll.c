@@ -1,9 +1,116 @@
 #include "dll.h"
+
+char operation_type(Dlist **head1,Dlist **tail1,Dlist **head2,Dlist **tail2,char opr,char *sign)
+{
+    char sign1='+';
+    char sign2='+';
+    if((*head1)->data == '+' ||(*head1)->data == '-' )
+    {
+        sign1 = (*head1)->data;
+        (*head1) = (*head1)->next;
+        (*head1)->prev=NULL;
+    }
+    if((*head2)->data == '+' ||(*head2)->data == '-' )
+    {
+        sign2 = (*head2)->data;
+        (*head2) = (*head2)->next;
+        (*head2)->prev=NULL;
+    }
+
+     switch(opr)
+    {
+        case '+' :
+            if(sign1 == sign2)
+            {
+                *sign = sign1;
+                return '+';
+            }
+            else
+            {
+                if(compare_lists(*head1,NULL,*head2,NULL)==NORMAL)
+                {
+                    *sign = sign1;
+                }
+                else
+                {
+                    *sign = sign2;
+                }
+                return '-';
+            }
+        break;
+
+        case '-' :
+            if(sign1 == '+' && sign2 == '+')
+            {
+                if(compare_lists(*head1,NULL,*head2,NULL) == NORMAL)
+                    *sign = '+';
+                else
+                    *sign = '-';
+
+                return '-';
+            }
+            else if(sign1 == '-' && sign2 == '-')
+            {
+                if(compare_lists(*head1,NULL,*head2,NULL) == NORMAL)
+                    *sign = '-';
+                else
+                    *sign = '+';
+
+                return '-';
+            }
+            else if(sign1 == '+' && sign2 == '-')
+            {
+                *sign = '+';
+                return '+';
+            }
+            else
+            {
+                *sign = '-';
+                return '+';
+            }
+        break;
+
+        case 'x' :
+        case 'X' :
+            if(sign1==sign2)
+            {
+                *sign = '+';
+                return 'x';
+            }
+            else
+            {
+                *sign ='-';
+                return 'x'; 
+            }
+        break;
+
+        case '/' :
+            if(sign1==sign2)
+            {
+                *sign = '+';
+                return '/';
+            }
+            else
+            {
+                *sign = '-';
+                return '/'; 
+            }
+        break;
+    }
+}
+
 int create_node(Dlist **head, Dlist **tail, char *str)
 {
+    int data;
     for(int i=0;str[i]!=0;i++)
     {
-        int data=str[i]-48;
+        if(str[i]=='+')
+            data ='+';
+        else if(str[i]=='-')
+            data = '-';
+        else
+        data=str[i]-48;
+
         insert_last(head,tail,data);
     }
     return SUCCESS;
@@ -93,7 +200,7 @@ int compare_lists(Dlist *head1, Dlist *tail1,Dlist *head2, Dlist *tail2)
         return SWAP;
     else if(list1_len==list2_len)
     {
-        while(head1->data==head2->data && head1!=NULL && head2!=NULL)
+        while(head1!=NULL && head2!=NULL && head1->data==head2->data)
         {
             head1=head1->next;
             head2=head2->next;
@@ -104,20 +211,11 @@ int compare_lists(Dlist *head1, Dlist *tail1,Dlist *head2, Dlist *tail2)
         
         if(head1->data>head2->data)
             return NORMAL;
-        else if(head1->data<head2->data)
+        else 
             return SWAP;
     }
 }
 
-void print_result(Dlist *head1,Dlist *tail1,Dlist *head2,Dlist *tail2, Dlist *headR, Dlist *tailR,char opr)
-{
-    print_list(head1, tail1);
-    printf(" %c ",opr);
-    print_list(head2, tail2);
-    printf(" = ");
-    print_list(headR, tailR);
-    printf("\n");
-}
 
 void leading_zero(Dlist **head,Dlist **tail)
 {

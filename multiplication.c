@@ -1,6 +1,6 @@
 #include "dll.h"
 
-void mul_operation(Dlist *head1,Dlist *tail1,Dlist *head2, Dlist *tail2,Dlist **headR, Dlist **tailR)
+void mul_operation(Dlist *head1,Dlist *tail1,Dlist *head2, Dlist *tail2,Dlist **headR, Dlist **tailR,char sign)
 {
     Dlist *res_head1 = NULL;
     Dlist *res_tail1 = NULL;
@@ -59,5 +59,8 @@ void mul_operation(Dlist *head1,Dlist *tail1,Dlist *head2, Dlist *tail2,Dlist **
         }
         temp2 = temp2->prev;
     }
-    print_result(head1,tail1,head2,tail2,res_head1,res_tail1,'x');
+    leading_zero(&res_head1,&res_tail1);
+    if(sign == '-')
+        insert_first(&res_head1,&res_tail1,sign);
+    print_list(res_head1,res_tail1);
 }
