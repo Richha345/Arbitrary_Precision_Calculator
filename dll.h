@@ -21,6 +21,7 @@ int insert_last(Dlist **head,Dlist **tail, int data);
 void print_list(Dlist *head,Dlist *tail);
 void leading_zero(Dlist **head,Dlist **tail);
 int delete_list(Dlist **head,Dlist **tail);
+int validation(char *);
 void get_list_length(Dlist *head1, Dlist *tail1,Dlist *head2, Dlist *tail2,int *list1_len,int *list2_len);
 int compare_lists(Dlist *head1, Dlist *tail1,Dlist *head2, Dlist *tail2);
 char operation_type(Dlist **head1,Dlist **tail1,Dlist **head2,Dlist **tail2,char opr,char *sign);

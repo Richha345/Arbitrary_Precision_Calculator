@@ -99,6 +99,8 @@ char operation_type(Dlist **head1,Dlist **tail1,Dlist **head2,Dlist **tail2,char
     }
 }
 
+// ============================================================================================= //
+
 int create_node(Dlist **head, Dlist **tail, char *str)
 {
     int data;
@@ -115,6 +117,8 @@ int create_node(Dlist **head, Dlist **tail, char *str)
     }
     return SUCCESS;
 }
+
+// ============================================================================================= //
 
 int insert_last(Dlist **head,Dlist **tail, int data)
 {
@@ -146,6 +150,8 @@ int insert_last(Dlist **head,Dlist **tail, int data)
     return SUCCESS;
 }
 
+// ============================================================================================= //
+
 int insert_first(Dlist **head,Dlist **tail, int data)
 {
     if(*head==NULL && *tail==NULL)
@@ -176,6 +182,8 @@ int insert_first(Dlist **head,Dlist **tail, int data)
     return SUCCESS;
 }
 
+// ============================================================================================= //
+
 void get_list_length(Dlist *head1, Dlist *tail1,Dlist *head2, Dlist *tail2,int *list1_len,int *list2_len)
 {
     while(head1!=NULL)
@@ -189,6 +197,8 @@ void get_list_length(Dlist *head1, Dlist *tail1,Dlist *head2, Dlist *tail2,int *
         (*list2_len)++;
     }
 }
+
+// ============================================================================================= //
 
 int compare_lists(Dlist *head1, Dlist *tail1,Dlist *head2, Dlist *tail2)
 {
@@ -216,6 +226,7 @@ int compare_lists(Dlist *head1, Dlist *tail1,Dlist *head2, Dlist *tail2)
     }
 }
 
+// ============================================================================================= //
 
 void leading_zero(Dlist **head,Dlist **tail)
 {
@@ -227,6 +238,8 @@ void leading_zero(Dlist **head,Dlist **tail)
         free(temp);
     }
 }
+
+// ============================================================================================= //
 
 int delete_list(Dlist **head,Dlist **tail)
 {
@@ -242,5 +255,19 @@ int delete_list(Dlist **head,Dlist **tail)
     }
     *head = NULL;
     *tail = NULL;
+    return SUCCESS;
+}
+
+// ============================================================================================= //
+
+int validation(char *str)
+{
+    for(int i=0;str[i]!=0;i++)
+    {
+        if(i==0 && str[i]=='-'||str[i]=='+')
+            continue;
+        if(str[i]<'0' || str[i]>'9')
+            return FAILURE;
+    }
     return SUCCESS;
 }

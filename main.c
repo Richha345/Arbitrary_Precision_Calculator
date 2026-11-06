@@ -1,5 +1,7 @@
 #include "dll.h"
 
+// ============================================================================================= //
+
 void print_list(Dlist *head,Dlist *tail)
 {
     if((head->data == '+' || head->data =='-') && head!=NULL && head->next->data==0 && head->next->next ==NULL)
@@ -20,11 +22,24 @@ void print_list(Dlist *head,Dlist *tail)
         head=head->next;
     }
 }
+
+// ============================================================================================= //
+
 int main(int argc, char *argv[])
 {
     if(argc!=4)
     {
-        printf("Invalid input Argument\n");
+        printf("Ivalid input\nUsage : Operand1(valid digits) Operator(+, -, x, /) Operand2(valid digits)\n");
+        return FAILURE;
+    }
+    if(validation(argv[1]) == FAILURE)
+    {
+        printf("Ivalid input\nUsage : Operand1(valid digits) Operator(+, -, x, /) Operand2(valid digits)\n");
+        return FAILURE;
+    }
+    if(validation(argv[3]) == FAILURE)
+    {
+        printf("Ivalid input\n");
         return FAILURE;
     }
     Dlist *head1=NULL;
@@ -82,7 +97,7 @@ int main(int argc, char *argv[])
         break;
 
         default:
-        printf("Invalid Operator\n");
+        printf("Invalid Operator\nUsage : Operand1(valid digits) Operator(+, -, x, /) Operand2(valid digits)\n");
     }
     printf("\n");
     return 0;
